@@ -7,6 +7,23 @@
     $result = $conn->query($sql);
     
     $row = $result->fetch_assoc();
+
+    $sql1 = "SELECT COUNT(*) AS total_rows FROM pengiriman";
+    $result1 = $conn->query($sql1);
+
+    $sql2 = "SELECT COUNT(*) AS total_rows FROM pengiriman WHERE status_pengiriman = 'Telah Sampai'";
+    $result2 = $conn->query($sql2);
+
+    $sql3 = "SELECT COUNT(*) AS total_rows FROM driver";
+    $result3 = $conn->query($sql3);
+
+    $sql4 = "SELECT COUNT(*) AS total_rows FROM client";
+    $result4 = $conn->query($sql4);
+
+    
+
+
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -187,7 +204,18 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Kiriman Paket (Bulanan)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">100 Paket</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php 
+                                                    if ($result1->num_rows > 0) {
+                                                        // Mengambil hasil query
+                                                        $row = $result1->fetch_assoc();
+                                                        echo $row["total_rows"] . " ";
+                                                    } else {
+                                                        echo "0 ";
+                                                    }
+                                                ?>
+                                                Paket
+                                            </div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -204,11 +232,21 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Pemasukan Paket (Bulanan)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                                Jumlah Driver</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            <?php 
+                                                    if ($result3->num_rows > 0) {
+                                                        // Mengambil hasil query
+                                                        $row = $result3->fetch_assoc();
+                                                        echo $row["total_rows"] . " ";
+                                                    } else {
+                                                        echo "0 ";
+                                                    }
+                                                ?>
+                                            </div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                            <i class="fas fa-solid fa-user fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -221,22 +259,26 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Status
-                                                Pengiriman
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Jumlah Client
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                                        <?php 
+                                                            if ($result4->num_rows > 0) {
+                                                                // Mengambil hasil query
+                                                                $row = $result4->fetch_assoc();
+                                                                echo $row["total_rows"] . " ";
+                                                            } else {
+                                                                echo "0 ";
+                                                            }
+                                                        ?>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                            <i class="fas fa-regular fa-user fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -251,7 +293,17 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 Pengiriman Berhasil Bulan Ini</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php
+                                                    if ($result2->num_rows > 0) {
+                                                        // Mengambil hasil query
+                                                        $row = $result2->fetch_assoc();
+                                                        echo $row["total_rows"];
+                                                    } else {
+                                                        echo "0";
+                                                    }
+                                                ?>
+                                            </div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-comments fa-2x text-gray-300"></i>
