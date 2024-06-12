@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 11, 2024 at 07:20 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Generation Time: Jun 12, 2024 at 06:54 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -33,7 +33,7 @@ CREATE TABLE `client` (
   `alamat_client` varchar(200) NOT NULL,
   `telepon` varchar(15) NOT NULL,
   `email` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `client`
@@ -56,7 +56,7 @@ CREATE TABLE `driver` (
   `alamat` varchar(200) NOT NULL,
   `telepon` varchar(15) NOT NULL,
   `email` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `driver`
@@ -79,7 +79,7 @@ CREATE TABLE `gudang` (
   `alamat_gudang` varchar(200) NOT NULL,
   `kapasitas` int(11) NOT NULL,
   `kapasitas_terpakai` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `gudang`
@@ -108,7 +108,7 @@ CREATE TABLE `pengiriman` (
   `realisasi_pengiriman` int(11) NOT NULL,
   `keterlambatan` int(11) DEFAULT NULL,
   `status_pengiriman` enum('Belum Berangkat','Dalam Perjalanan','Telah Sampai') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `pengiriman`
@@ -117,7 +117,7 @@ CREATE TABLE `pengiriman` (
 INSERT INTO `pengiriman` (`shipment_id`, `client_id`, `tanggal_muat`, `tanggal_bongkar`, `jenis_barang`, `target_pengiriman`, `asal_gudang_id`, `tujuan_bongkar`, `plat`, `driver_id`, `realisasi_pengiriman`, `keterlambatan`, `status_pengiriman`) VALUES
 (1, 1, '2024-06-08', '2024-06-11', 'ESTA KIESER-MAG', 4, 1, 'CIPTA FUTURA ESTATE', 'BA 8219 QU', 4, 4, 0, 'Belum Berangkat'),
 (2, 3, '2024-06-11', '2024-06-15', 'ESTA KIESER-MAG', 4, 1, 'CIPTA FUTURA ESTATE', 'BA 2302 NA', 4, 0, 0, 'Telah Sampai'),
-(3, 4, '2024-06-10', '2024-06-13', 'ESTA KIESER-MAG', 4, 1, 'CIPTA FUTURA ESTATE', 'BA 1234 ON', 4, 3, 0, 'Dalam Perjalanan');
+(3, 4, '2024-06-10', '2024-06-13', 'ESTA KIESER-MAG', 4, 1, 'CIPTA FUTURA ESTATE', 'BA 1234 ON', 4, 3, 0, 'Telah Sampai');
 
 -- --------------------------------------------------------
 
@@ -131,14 +131,7 @@ CREATE TABLE `users` (
   `last_name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`) VALUES
-(1, 'reyhan', 'alfaro', 'reyhan@gmail.com', '123456');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
@@ -210,7 +203,7 @@ ALTER TABLE `pengiriman`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
