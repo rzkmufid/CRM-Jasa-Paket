@@ -1,12 +1,12 @@
 <?php
-  include 'db.php';
-  include 'check_session.php';
-  $result = mysqli_query($conn, "SELECT * FROM client");
-  $user_id = $_SESSION['user_id'];
-    $sql = "SELECT first_name, last_name FROM users WHERE id = '$user_id' LIMIT 1";
-    $result1 = $conn->query($sql);
-    
-    $row = $result1->fetch_assoc();
+include 'db.php';
+include 'check_session.php';
+$result = mysqli_query($conn, "SELECT * FROM client");
+$user_id = $_SESSION['user_id'];
+$sql = "SELECT first_name, last_name FROM users WHERE id = '$user_id' LIMIT 1";
+$result1 = $conn->query($sql);
+
+$row = $result1->fetch_assoc();
 ?>
 
 <!DOCTYPE html>
@@ -24,9 +24,7 @@
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -74,12 +72,11 @@
 
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClient" aria-expanded="true" aria-controls="collapseClient">
                     <i class="fas fa-fw fa-laugh-wink"></i>
                     <span>Client</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseClient" class="collapse" aria-labelledby="headingClient" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Content of Client</h6>
                         <a class="collapse-item" href="client.php">Table Data Client</a>
@@ -88,15 +85,13 @@
                 </div>
             </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
+            <!-- Nav Item - Driver Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDriver" aria-expanded="true" aria-controls="collapseDriver">
                     <i class="fas fa-fw fa-truck"></i>
                     <span>Driver</span>
                 </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
+                <div id="collapseDriver" class="collapse" aria-labelledby="headingDriver" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Driver</h6>
                         <a class="collapse-item" href="driver.php">Table Data Driver</a>
@@ -104,13 +99,29 @@
                     </div>
                 </div>
             </li>
+
+            <!-- Nav Item - Gudang Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGudang" aria-expanded="true" aria-controls="collapseGudang">
+                    <i class="fas fa-fw fa-warehouse"></i>
+                    <span>Gudang</span>
+                </a>
+                <div id="collapseGudang" class="collapse" aria-labelledby="headingGudang" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Gudang</h6>
+                        <a class="collapse-item" href="gudang.php">Table Data Gudang</a>
+                        <a class="collapse-item" href="tambah_gudang.php">Tambah Data Gudang</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Pengiriman Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePengiriman" aria-expanded="true" aria-controls="collapsePengiriman">
                     <i class="fas fa-fw fa-box"></i>
                     <span>Pengiriman</span>
                 </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="collapsePengiriman" class="collapse" aria-labelledby="headingPengiriman" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Pengiriman</h6>
                         <a class="collapse-item" href="pengiriman.php">Table Data Pengiriman</a>
@@ -161,15 +172,12 @@
 
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $row["first_name"] ?></span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
@@ -207,20 +215,20 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                      <?php
+                                        <?php
                                         $i = 1;
                                         while ($row = mysqli_fetch_assoc($result)) : ?>
-                                          <tr>
-                                            <td><?php echo $i; ?></td>
-                                            <?php $id = $row["client_id"]; ?>
-                                            <td><?php echo $row["nama_client"]; ?></td>
-                                            <td><?php echo $row["alamat_client"]; ?></td>
-                                            <td><?php echo $row["telepon"]; ?></td>
-                                            <td><?php echo $row["email"]; ?></td>
-                                            <td><a href="edit_client.php?id=<?php echo $row["client_id"]; ?>" class="btn btn-warning "> Edit</a>
-                                              <a href="hapus_client.php?id=<?php echo $row["client_id"]; ?>" class="btn btn-danger ">Hapus</a>
-                                            </td>
-                                          </tr>
+                                            <tr>
+                                                <td><?php echo $i; ?></td>
+                                                <?php $id = $row["client_id"]; ?>
+                                                <td><?php echo $row["nama_client"]; ?></td>
+                                                <td><?php echo $row["alamat_client"]; ?></td>
+                                                <td><?php echo $row["telepon"]; ?></td>
+                                                <td><?php echo $row["email"]; ?></td>
+                                                <td><a href="edit_client.php?id=<?php echo $row["client_id"]; ?>" class="btn btn-warning "> Edit</a>
+                                                    <a href="hapus_client.php?id=<?php echo $row["client_id"]; ?>" class="btn btn-danger ">Hapus</a>
+                                                </td>
+                                            </tr>
 
                                         <?php $i++;
                                         endwhile; ?>
@@ -258,8 +266,7 @@
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

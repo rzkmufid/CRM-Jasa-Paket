@@ -1,35 +1,35 @@
 <?php
-  include 'db.php';
-  include 'check_session.php';
+include 'db.php';
+include 'check_session.php';
 
 // session_start();
 if (isset($_POST["Simpan"])) {
-  $nama_supir = $_POST["nama_supir"];
-  $alamat = $_POST["alamat"];
-  $telepon = $_POST["telepon"];
-  $email = $_POST["email"];
+    $nama_supir = $_POST["nama_supir"];
+    $alamat = $_POST["alamat"];
+    $telepon = $_POST["telepon"];
+    $email = $_POST["email"];
 
-  $q = "INSERT INTO driver VALUES('','$nama_supir','$alamat','$telepon','$email')";
-  mysqli_query($conn, $q);
+    $q = "INSERT INTO driver VALUES('','$nama_supir','$alamat','$telepon','$email')";
+    mysqli_query($conn, $q);
 
-  if (mysqli_affected_rows($conn) > 0) {
-    echo "<script>
+    if (mysqli_affected_rows($conn) > 0) {
+        echo "<script>
                 alert('Data Berhasil Disimpan');
                 document.location.href='driver.php';
             </script>";
-  } else {
-    echo "<script>
+    } else {
+        echo "<script>
                 alert('Data Gagal Disimpan');
                 document.location.href='driver.php';
             </script>";
-  }
+    }
 }
 
-    $user_id = $_SESSION['user_id'];
-    $sql = "SELECT first_name, last_name FROM users WHERE id = '$user_id' LIMIT 1";
-    $result = $conn->query($sql);
-    
-    $row = $result->fetch_assoc();
+$user_id = $_SESSION['user_id'];
+$sql = "SELECT first_name, last_name FROM users WHERE id = '$user_id' LIMIT 1";
+$result = $conn->query($sql);
+
+$row = $result->fetch_assoc();
 
 ?>
 
@@ -48,9 +48,7 @@ if (isset($_POST["Simpan"])) {
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -98,12 +96,11 @@ if (isset($_POST["Simpan"])) {
 
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClient" aria-expanded="true" aria-controls="collapseClient">
                     <i class="fas fa-fw fa-laugh-wink"></i>
                     <span>Client</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseClient" class="collapse" aria-labelledby="headingClient" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Content of Client</h6>
                         <a class="collapse-item" href="client.php">Table Data Client</a>
@@ -112,15 +109,13 @@ if (isset($_POST["Simpan"])) {
                 </div>
             </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
+            <!-- Nav Item - Driver Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDriver" aria-expanded="true" aria-controls="collapseDriver">
                     <i class="fas fa-fw fa-truck"></i>
                     <span>Driver</span>
                 </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
+                <div id="collapseDriver" class="collapse" aria-labelledby="headingDriver" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Driver</h6>
                         <a class="collapse-item" href="driver.php">Table Data Driver</a>
@@ -128,13 +123,29 @@ if (isset($_POST["Simpan"])) {
                     </div>
                 </div>
             </li>
+
+            <!-- Nav Item - Gudang Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGudang" aria-expanded="true" aria-controls="collapseGudang">
+                    <i class="fas fa-fw fa-warehouse"></i>
+                    <span>Gudang</span>
+                </a>
+                <div id="collapseGudang" class="collapse" aria-labelledby="headingGudang" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Gudang</h6>
+                        <a class="collapse-item" href="gudang.php">Table Data Gudang</a>
+                        <a class="collapse-item" href="tambah_gudang.php">Tambah Data Gudang</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Pengiriman Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePengiriman" aria-expanded="true" aria-controls="collapsePengiriman">
                     <i class="fas fa-fw fa-box"></i>
                     <span>Pengiriman</span>
                 </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="collapsePengiriman" class="collapse" aria-labelledby="headingPengiriman" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Pengiriman</h6>
                         <a class="collapse-item" href="pengiriman.php">Table Data Pengiriman</a>
@@ -185,15 +196,12 @@ if (isset($_POST["Simpan"])) {
 
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $row["first_name"] ?></span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
@@ -220,26 +228,26 @@ if (isset($_POST["Simpan"])) {
                         <div class="card-body">
                             <!-- <h1>Test</h1> -->
                             <div class="p-4">
-                            <form action="" method="post">
-                              <div class="form-group">
-                                <label for="nama_driver">Nama Driver</label>
-                                <input type="text" class="form-control" id="nama_supir" name="nama_supir">
-                              </div>
-                              <div class="form-group">
-                                <label for="alamat">Alamat driver</label>
-                                <input type="text" class="form-control" id="alamat" name="alamat">
-                              </div>
-                              <div class="form-group">
-                                <label for="telepon">Telepon</label>
-                                <input type="text" class="form-control" id="telepon" name="telepon">
-                              </div>
-                              <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control" id="email" name="email">
-                              </div>
-                              <button type="submit" class="btn btn-primary" name="Simpan">Simpan</button>
-                            </form>
-                          </div>
+                                <form action="" method="post">
+                                    <div class="form-group">
+                                        <label for="nama_driver">Nama Driver</label>
+                                        <input type="text" class="form-control" id="nama_supir" name="nama_supir">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="alamat">Alamat driver</label>
+                                        <input type="text" class="form-control" id="alamat" name="alamat">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="telepon">Telepon</label>
+                                        <input type="text" class="form-control" id="telepon" name="telepon">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" name="Simpan">Simpan</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
 
@@ -271,8 +279,7 @@ if (isset($_POST["Simpan"])) {
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

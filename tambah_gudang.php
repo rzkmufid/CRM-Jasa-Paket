@@ -2,20 +2,17 @@
 include 'db.php';
 include 'check_session.php';
 
-// session_start();
 if (isset($_POST["Simpan"])) {
-    $nama_client = $_POST["nama_client"];
-    $alamat_client = $_POST["alamat_client"];
-    $telepon = $_POST["telepon"];
-    $email = $_POST["email"];
+    $nama_gudang = $_POST["nama_gudang"];
+    $alamat_gudang = $_POST["alamat_gudang"];
 
-    $q = "INSERT INTO client VALUES('','$nama_client','$alamat_client','$telepon','$email')";
+    $q = "INSERT INTO gudang (nama_gudang, alamat_gudang) VALUES('$nama_gudang', '$alamat_gudang')";
     mysqli_query($conn, $q);
 
     if (mysqli_affected_rows($conn) > 0) {
         echo "<script>
                 alert('Data Berhasil Disimpan');
-                document.location.href='index.php';
+                document.location.href='gudang.php';
             </script>";
     } else {
         echo "<script>
@@ -217,33 +214,24 @@ $row = $result->fetch_assoc();
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Tambah Data Client</h1>
-                    <p class="mb-4">Data ini akan mengeluarkan data client yang terdaftar pada sistem ini.</p>
+                    <h1 class="h3 mb-2 text-gray-800">Tambah Data Gudang</h1>
+                    <p class="mb-4">Data ini akan mengeluarkan data gudang yang terdaftar pada sistem ini.</p>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Add Client</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Add Gudang</h6>
                         </div>
                         <div class="card-body">
-                            <!-- <h1>Test</h1> -->
                             <div class="p-4">
                                 <form action="" method="post">
                                     <div class="form-group">
-                                        <label for="nama_client">Nama Client:</label>
-                                        <input type="text" class="form-control" id="nama_client" name="nama_client">
+                                        <label for="nama_gudang">Nama Gudang:</label>
+                                        <input type="text" class="form-control" id="nama_gudang" name="nama_gudang" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="alamat_client">Alamat Client</label>
-                                        <input type="text" class="form-control" id="alamat_client" name="alamat_client">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="telepon">Telepon</label>
-                                        <input type="text" class="form-control" id="telepon" name="telepon">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email">Email</label>
-                                        <input type="email" class="form-control" id="email" name="email">
+                                        <label for="alamat_gudang">Alamat Gudang:</label>
+                                        <textarea class="form-control" id="alamat_gudang" name="alamat_gudang" required></textarea>
                                     </div>
                                     <button type="submit" class="btn btn-primary" name="Simpan">Simpan</button>
                                 </form>
@@ -261,7 +249,6 @@ $row = $result->fetch_assoc();
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <!-- <span>Copyright &copy; Your Website 2020</span> -->
                     </div>
                 </div>
             </footer>

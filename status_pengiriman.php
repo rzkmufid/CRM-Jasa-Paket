@@ -75,9 +75,7 @@ $row1 = $result1->fetch_assoc();
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -87,61 +85,61 @@ $row1 = $result1->fetch_assoc();
 
 </head>
 <style>
-@media print {
-    .container {
-        margin: 0;
-    }
+    @media print {
+        .container {
+            margin: 0;
+        }
 
-    /* Mengatur lebar halaman cetak */
-    body {
-        width: 100%;
-        font-size: 12px;
-    }
+        /* Mengatur lebar halaman cetak */
+        body {
+            width: 100%;
+            font-size: 12px;
+        }
 
-    /* Mengatur tabel agar memenuhi halaman cetak */
-    table {
-        width: 100%;
-    }
+        /* Mengatur tabel agar memenuhi halaman cetak */
+        table {
+            width: 100%;
+        }
 
-    /* Menghilangkan elemen-elemen lainnya */
-    .sidebar {
-        display: none;
-    }
+        /* Menghilangkan elemen-elemen lainnya */
+        .sidebar {
+            display: none;
+        }
 
-    .topbar {
-        display: none;
-    }
+        .topbar {
+            display: none;
+        }
 
-    .sticky-footer {
-        display: none;
-    }
+        .sticky-footer {
+            display: none;
+        }
 
-    .scroll-to-top {
-        display: none;
-    }
+        .scroll-to-top {
+            display: none;
+        }
 
-    /* Memastikan tabel tercetak dalam satu halaman */
-    .card {
-        page-break-inside: avoid;
-        padding: 0;
-        margin: 0;
-    }
+        /* Memastikan tabel tercetak dalam satu halaman */
+        .card {
+            page-break-inside: avoid;
+            padding: 0;
+            margin: 0;
+        }
 
-    .hilang {
-        display: none;
-    }
+        .hilang {
+            display: none;
+        }
 
-    .card-body {
-        padding: 0;
-        margin: 0;
-    }
+        .card-body {
+            padding: 0;
+            margin: 0;
+        }
 
-    .container-fluid {
-        margin: 0;
-        padding: 0;
-    }
+        .container-fluid {
+            margin: 0;
+            padding: 0;
+        }
 
-}
+    }
 </style>
 
 <body id="page-top">
@@ -149,6 +147,7 @@ $row1 = $result1->fetch_assoc();
     <!-- Page Wrapper -->
     <div id="wrapper">
 
+        <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
@@ -181,12 +180,11 @@ $row1 = $result1->fetch_assoc();
 
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClient" aria-expanded="true" aria-controls="collapseClient">
                     <i class="fas fa-fw fa-laugh-wink"></i>
                     <span>Client</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseClient" class="collapse" aria-labelledby="headingClient" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Content of Client</h6>
                         <a class="collapse-item" href="client.php">Table Data Client</a>
@@ -195,15 +193,13 @@ $row1 = $result1->fetch_assoc();
                 </div>
             </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
+            <!-- Nav Item - Driver Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDriver" aria-expanded="true" aria-controls="collapseDriver">
                     <i class="fas fa-fw fa-truck"></i>
                     <span>Driver</span>
                 </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
+                <div id="collapseDriver" class="collapse" aria-labelledby="headingDriver" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Driver</h6>
                         <a class="collapse-item" href="driver.php">Table Data Driver</a>
@@ -211,13 +207,29 @@ $row1 = $result1->fetch_assoc();
                     </div>
                 </div>
             </li>
+
+            <!-- Nav Item - Gudang Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGudang" aria-expanded="true" aria-controls="collapseGudang">
+                    <i class="fas fa-fw fa-warehouse"></i>
+                    <span>Gudang</span>
+                </a>
+                <div id="collapseGudang" class="collapse" aria-labelledby="headingGudang" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Gudang</h6>
+                        <a class="collapse-item" href="gudang.php">Table Data Gudang</a>
+                        <a class="collapse-item" href="tambah_gudang.php">Tambah Data Gudang</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Pengiriman Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePengiriman" aria-expanded="true" aria-controls="collapsePengiriman">
                     <i class="fas fa-fw fa-box"></i>
                     <span>Pengiriman</span>
                 </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="collapsePengiriman" class="collapse" aria-labelledby="headingPengiriman" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Pengiriman</h6>
                         <a class="collapse-item" href="pengiriman.php">Table Data Pengiriman</a>
@@ -268,15 +280,12 @@ $row1 = $result1->fetch_assoc();
 
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span
-                                    class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $row1["first_name"] ?></span>
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $row1["first_name"] ?></span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
@@ -301,36 +310,36 @@ $row1 = $result1->fetch_assoc();
 
                     <!-- DataTales Example -->
                     <?php foreach ($tables as $status => $table) : ?>
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary"><?php echo $status; ?></h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>Id Pengiriman</th>
-                                            <th>Tanggal Bongkar</th>
-                                            <th>Jenis Barang</th>
-                                            <th>Target Pengiriman</th>
-                                            <th>Asal Gudang</th>
-                                            <th>Tujuan Bongkar</th>
-                                            <th>Plat</th>
-                                            <th>Supir</th>
-                                            <th>Realisasi Pengiriman</th>
-                                            <th>Keterlambatan</th>
-                                            <th>Status</th>
-                                            <th class="hilang">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php echo $table; ?>
-                                    </tbody>
-                                </table>
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary"><?php echo $status; ?></h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Id Pengiriman</th>
+                                                <th>Tanggal Bongkar</th>
+                                                <th>Jenis Barang</th>
+                                                <th>Target Pengiriman</th>
+                                                <th>Asal Gudang</th>
+                                                <th>Tujuan Bongkar</th>
+                                                <th>Plat</th>
+                                                <th>Supir</th>
+                                                <th>Realisasi Pengiriman</th>
+                                                <th>Keterlambatan</th>
+                                                <th>Status</th>
+                                                <th class="hilang">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php echo $table; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     <?php endforeach; ?>
                     <!-- DataTales Example -->
 
@@ -363,8 +372,7 @@ $row1 = $result1->fetch_assoc();
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -403,9 +411,9 @@ $row1 = $result1->fetch_assoc();
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
     <script>
-    function printAllTables() {
-        window.print(); // Mencetak halaman
-    }
+        function printAllTables() {
+            window.print(); // Mencetak halaman
+        }
     </script>
 
 

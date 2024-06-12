@@ -1,29 +1,29 @@
-<?php 
-    include 'check_session.php'; 
-    include 'db.php';
+<?php
+include 'check_session.php';
+include 'db.php';
 
-    $user_id = $_SESSION['user_id'];
-    $sql = "SELECT first_name, last_name FROM users WHERE id = '$user_id' LIMIT 1";
-    $result = $conn->query($sql);
-    
-    $row = $result->fetch_assoc();
+$user_id = $_SESSION['user_id'];
+$sql = "SELECT first_name, last_name FROM users WHERE id = '$user_id' LIMIT 1";
+$result = $conn->query($sql);
 
-    $sql1 = "SELECT COUNT(*) AS total_rows FROM pengiriman";
-    $result1 = $conn->query($sql1);
+$row = $result->fetch_assoc();
 
-    $sql2 = "SELECT COUNT(*) AS total_rows FROM pengiriman WHERE status_pengiriman = 'Telah Sampai'";
-    $result2 = $conn->query($sql2);
+$sql1 = "SELECT COUNT(*) AS total_rows FROM pengiriman";
+$result1 = $conn->query($sql1);
 
-    $sql3 = "SELECT COUNT(*) AS total_rows FROM driver";
-    $result3 = $conn->query($sql3);
+$sql2 = "SELECT COUNT(*) AS total_rows FROM pengiriman WHERE status_pengiriman = 'Telah Sampai'";
+$result2 = $conn->query($sql2);
 
-    $sql4 = "SELECT COUNT(*) AS total_rows FROM client";
-    $result4 = $conn->query($sql4);
+$sql3 = "SELECT COUNT(*) AS total_rows FROM driver";
+$result3 = $conn->query($sql3);
 
-    
+$sql4 = "SELECT COUNT(*) AS total_rows FROM client";
+$result4 = $conn->query($sql4);
 
 
-    
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -85,11 +85,11 @@
 
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClient" aria-expanded="true" aria-controls="collapseClient">
                     <i class="fas fa-fw fa-laugh-wink"></i>
                     <span>Client</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseClient" class="collapse" aria-labelledby="headingClient" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Content of Client</h6>
                         <a class="collapse-item" href="client.php">Table Data Client</a>
@@ -98,13 +98,13 @@
                 </div>
             </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
+            <!-- Nav Item - Driver Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDriver" aria-expanded="true" aria-controls="collapseDriver">
                     <i class="fas fa-fw fa-truck"></i>
                     <span>Driver</span>
                 </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                <div id="collapseDriver" class="collapse" aria-labelledby="headingDriver" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Driver</h6>
                         <a class="collapse-item" href="driver.php">Table Data Driver</a>
@@ -112,12 +112,29 @@
                     </div>
                 </div>
             </li>
+
+            <!-- Nav Item - Gudang Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGudang" aria-expanded="true" aria-controls="collapseGudang">
+                    <i class="fas fa-fw fa-warehouse"></i>
+                    <span>Gudang</span>
+                </a>
+                <div id="collapseGudang" class="collapse" aria-labelledby="headingGudang" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Gudang</h6>
+                        <a class="collapse-item" href="gudang.php">Table Data Gudang</a>
+                        <a class="collapse-item" href="tambah_gudang.php">Tambah Data Gudang</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Pengiriman Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePengiriman" aria-expanded="true" aria-controls="collapsePengiriman">
                     <i class="fas fa-fw fa-box"></i>
                     <span>Pengiriman</span>
                 </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="collapsePengiriman" class="collapse" aria-labelledby="headingPengiriman" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Pengiriman</h6>
                         <a class="collapse-item" href="pengiriman.php">Table Data Pengiriman</a>
@@ -205,14 +222,14 @@
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Kiriman Paket (Bulanan)</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php 
-                                                    if ($result1->num_rows > 0) {
-                                                        // Mengambil hasil query
-                                                        $row = $result1->fetch_assoc();
-                                                        echo $row["total_rows"] . " ";
-                                                    } else {
-                                                        echo "0 ";
-                                                    }
+                                                <?php
+                                                if ($result1->num_rows > 0) {
+                                                    // Mengambil hasil query
+                                                    $row = $result1->fetch_assoc();
+                                                    echo $row["total_rows"] . " ";
+                                                } else {
+                                                    echo "0 ";
+                                                }
                                                 ?>
                                                 Paket
                                             </div>
@@ -234,14 +251,14 @@
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Jumlah Driver</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            <?php 
-                                                    if ($result3->num_rows > 0) {
-                                                        // Mengambil hasil query
-                                                        $row = $result3->fetch_assoc();
-                                                        echo $row["total_rows"] . " ";
-                                                    } else {
-                                                        echo "0 ";
-                                                    }
+                                                <?php
+                                                if ($result3->num_rows > 0) {
+                                                    // Mengambil hasil query
+                                                    $row = $result3->fetch_assoc();
+                                                    echo $row["total_rows"] . " ";
+                                                } else {
+                                                    echo "0 ";
+                                                }
                                                 ?>
                                             </div>
                                         </div>
@@ -264,14 +281,14 @@
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
                                                     <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                                                        <?php 
-                                                            if ($result4->num_rows > 0) {
-                                                                // Mengambil hasil query
-                                                                $row = $result4->fetch_assoc();
-                                                                echo $row["total_rows"] . " ";
-                                                            } else {
-                                                                echo "0 ";
-                                                            }
+                                                        <?php
+                                                        if ($result4->num_rows > 0) {
+                                                            // Mengambil hasil query
+                                                            $row = $result4->fetch_assoc();
+                                                            echo $row["total_rows"] . " ";
+                                                        } else {
+                                                            echo "0 ";
+                                                        }
                                                         ?>
                                                     </div>
                                                 </div>
@@ -295,13 +312,13 @@
                                                 Pengiriman Berhasil Bulan Ini</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php
-                                                    if ($result2->num_rows > 0) {
-                                                        // Mengambil hasil query
-                                                        $row = $result2->fetch_assoc();
-                                                        echo $row["total_rows"];
-                                                    } else {
-                                                        echo "0";
-                                                    }
+                                                if ($result2->num_rows > 0) {
+                                                    // Mengambil hasil query
+                                                    $row = $result2->fetch_assoc();
+                                                    echo $row["total_rows"];
+                                                } else {
+                                                    echo "0";
+                                                }
                                                 ?>
                                             </div>
                                         </div>
