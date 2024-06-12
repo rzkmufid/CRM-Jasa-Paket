@@ -1,5 +1,6 @@
 <?php
 include 'db.php';
+include 'check_session.php';
 
 if (isset($_GET['id'])) {
   $id = $_GET['id'];
@@ -32,6 +33,12 @@ if (isset($_POST['update'])) {
     echo "Error: " . $update_query . "<br>" . mysqli_error($conn);
   }
 }
+
+    $user_id = $_SESSION['user_id'];
+    $sql = "SELECT first_name, last_name FROM users WHERE id = '$user_id' LIMIT 1";
+    $result1 = $conn->query($sql);
+
+    $row1 = $result1->fetch_assoc();
 ?>
 
 
@@ -295,8 +302,7 @@ if (isset($_POST['update'])) {
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div class="font-weight-bold">
@@ -307,8 +313,7 @@ if (isset($_POST['update'])) {
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="...">
                                         <div class="status-indicator"></div>
                                     </div>
                                     <div>
@@ -319,8 +324,7 @@ if (isset($_POST['update'])) {
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="...">
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
                                     <div>
@@ -351,26 +355,13 @@ if (isset($_POST['update'])) {
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                <span
+                                    class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $row1["first_name"] ?></span>
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
-                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
@@ -398,93 +389,107 @@ if (isset($_POST['update'])) {
                         <div class="card-body">
                             <!-- <h1>Test</h1> -->
                             <form class="" action="" method="post">
-                              <div class="form-group">
-                                  <label for="client_id">Nama Client:</label>
-                                  <select class="form-control" id="client_id" name="client_id">
-                                      <?php
+                                <div class="form-group">
+                                    <label for="client_id">Nama Client:</label>
+                                    <select class="form-control" id="client_id" name="client_id">
+                                        <?php
                                       $client_result = mysqli_query($conn, "SELECT * FROM client");
                                       while ($client_row = mysqli_fetch_assoc($client_result)) {
                                           echo "<option value=\"" . $client_row['client_id'] . "\" " . ($client_row['client_id'] == $row['client_id'] ? "selected" : "") . ">" . $client_row['nama_client'] . "</option>";
                                       }
                                       ?>
-                                  </select>
-                              </div>
+                                    </select>
+                                </div>
 
-                            <div class="form-group">
-                                <label for="nama_supir">Nama Supir:</label>
-                                <select class="form-control" id="nama_supir" name="nama_supir">
-                                    <?php
+                                <div class="form-group">
+                                    <label for="nama_supir">Nama Supir:</label>
+                                    <select class="form-control" id="nama_supir" name="nama_supir">
+                                        <?php
                                     $driver_result = mysqli_query($conn, "SELECT * FROM driver");
                                     while ($driver_row = mysqli_fetch_assoc($driver_result)) {
                                         echo "<option value=\"" . $driver_row['driver_id'] . "\" " . ($driver_row['driver_id'] == $row['driver_id'] ? "selected" : "") . ">" . $driver_row['nama_supir'] . "</option>";
                                     }
                                     ?>
-                                </select>
-                            </div>
+                                    </select>
+                                </div>
 
-                            <div class="form-group">
-                                <label for="asal_gudang">Asal Gudang:</label>
-                                <select class="form-control" id="asal_gudang" name="asal_gudang">
-                                    <?php
+                                <div class="form-group">
+                                    <label for="asal_gudang">Asal Gudang:</label>
+                                    <select class="form-control" id="asal_gudang" name="asal_gudang">
+                                        <?php
                                     $gudang_result = mysqli_query($conn, "SELECT * FROM gudang");
                                     while ($gudang_row = mysqli_fetch_assoc($gudang_result)) {
                                         echo "<option value=\"" . $gudang_row['warehouse_id'] . "\" " . ($gudang_row['warehouse_id'] == $row['asal_gudang_id'] ? "selected" : "") . ">" . $gudang_row['nama_gudang'] . "</option>";
                                     }
                                     ?>
-                                </select>
-                            </div>
+                                    </select>
+                                </div>
 
-                            <div class="form-group">
-                                <label for="tanggal_muat">Tanggal Muat:</label>
-                                <input type="date" class="form-control" id="tanggal_muat" name="tanggal_muat" value="<?php echo $row['tanggal_muat']; ?>">
-                            </div>
+                                <div class="form-group">
+                                    <label for="tanggal_muat">Tanggal Muat:</label>
+                                    <input type="date" class="form-control" id="tanggal_muat" name="tanggal_muat"
+                                        value="<?php echo $row['tanggal_muat']; ?>">
+                                </div>
 
-                            <div class="form-group">
-                                <label for="tanggal_bongkar">Tanggal Bongkar:</label>
-                                <input type="date" class="form-control" id="tanggal_bongkar" name="tanggal_bongkar" value="<?php echo $row['tanggal_bongkar']; ?>">
-                            </div>
+                                <div class="form-group">
+                                    <label for="tanggal_bongkar">Tanggal Bongkar:</label>
+                                    <input type="date" class="form-control" id="tanggal_bongkar" name="tanggal_bongkar"
+                                        value="<?php echo $row['tanggal_bongkar']; ?>">
+                                </div>
 
-                            <div class="form-group">
-                                <label for="jenis_barang">Jenis Barang:</label>
-                                <input type="text" class="form-control" id="jenis_barang" name="jenis_barang" value="<?php echo $row['jenis_barang']; ?>">
-                            </div>
+                                <div class="form-group">
+                                    <label for="jenis_barang">Jenis Barang:</label>
+                                    <input type="text" class="form-control" id="jenis_barang" name="jenis_barang"
+                                        value="<?php echo $row['jenis_barang']; ?>">
+                                </div>
 
-                            <div class="form-group">
-                                <label for="target_pengiriman">Target Pengiriman:</label>
-                                <input type="text" class="form-control" id="target_pengiriman" name="target_pengiriman" value="<?php echo $row['target_pengiriman']; ?>">
-                            </div>
+                                <div class="form-group">
+                                    <label for="target_pengiriman">Target Pengiriman:</label>
+                                    <input type="text" class="form-control" id="target_pengiriman"
+                                        name="target_pengiriman" value="<?php echo $row['target_pengiriman']; ?>">
+                                </div>
 
-                            <div class="form-group">
-                                <label for="tujuan_bongkar">Tujuan Bongkar:</label>
-                                <input type="text" class="form-control" id="tujuan_bongkar" name="tujuan_bongkar" value="<?php echo $row['tujuan_bongkar']; ?>">
-                            </div>
+                                <div class="form-group">
+                                    <label for="tujuan_bongkar">Tujuan Bongkar:</label>
+                                    <input type="text" class="form-control" id="tujuan_bongkar" name="tujuan_bongkar"
+                                        value="<?php echo $row['tujuan_bongkar']; ?>">
+                                </div>
 
-                            <div class="form-group">
-                                <label for="plat">Plat:</label>
-                                <input type="text" class="form-control" id="plat" name="plat" value="<?php echo $row['plat']; ?>">
-                            </div>
+                                <div class="form-group">
+                                    <label for="plat">Plat:</label>
+                                    <input type="text" class="form-control" id="plat" name="plat"
+                                        value="<?php echo $row['plat']; ?>">
+                                </div>
 
-                            <div class="form-group">
-                                <label for="realisasi_pengiriman">Realisasi Pengiriman:</label>
-                                <input type="text" class="form-control" id="realisasi_pengiriman" name="realisasi_pengiriman" value="<?php echo $row['realisasi_pengiriman']; ?>">
-                            </div>
+                                <div class="form-group">
+                                    <label for="realisasi_pengiriman">Realisasi Pengiriman:</label>
+                                    <input type="text" class="form-control" id="realisasi_pengiriman"
+                                        name="realisasi_pengiriman" value="<?php echo $row['realisasi_pengiriman']; ?>">
+                                </div>
 
-                            <div class="form-group">
-                                <label for="keterlambatan">Keterlambatan:</label>
-                                <input type="text" class="form-control" id="keterlambatan" name="keterlambatan" value="<?php echo $row['keterlambatan']; ?>">
-                            </div>
+                                <div class="form-group">
+                                    <label for="keterlambatan">Keterlambatan:</label>
+                                    <input type="text" class="form-control" id="keterlambatan" name="keterlambatan"
+                                        value="<?php echo $row['keterlambatan']; ?>">
+                                </div>
 
-                            <div class="form-group">
-                                <label for="status_pengiriman">Status:</label>
-                                <select class="form-control" id="status_pengiriman" name="status_pengiriman">
-                                    <option value="Belum Berangkat" <?php if ($row['status_pengiriman'] == "Belum Berangkat") echo "selected"; ?>>Belum Berangkat</option>
-                                    <option value="Dalam Perjalanan" <?php if ($row['status_pengiriman'] == "Dalam Perjalanan") echo "selected"; ?>>Dalam Perjalanan</option>
-                                    <option value="Telah Sampai" <?php if ($row['status_pengiriman'] == "Telah Sampai") echo "selected"; ?>>Telah Sampai</option>
-                                </select>
-                            </div>
+                                <div class="form-group">
+                                    <label for="status_pengiriman">Status:</label>
+                                    <select class="form-control" id="status_pengiriman" name="status_pengiriman">
+                                        <option value="Belum Berangkat"
+                                            <?php if ($row['status_pengiriman'] == "Belum Berangkat") echo "selected"; ?>>
+                                            Belum Berangkat</option>
+                                        <option value="Dalam Perjalanan"
+                                            <?php if ($row['status_pengiriman'] == "Dalam Perjalanan") echo "selected"; ?>>
+                                            Dalam Perjalanan</option>
+                                        <option value="Telah Sampai"
+                                            <?php if ($row['status_pengiriman'] == "Telah Sampai") echo "selected"; ?>>
+                                            Telah Sampai</option>
+                                    </select>
+                                </div>
 
 
-                            <button type="submit" class="btn btn-primary" name="update">Simpan</button>
+                                <button type="submit" class="btn btn-primary" name="update">Simpan</button>
                             </form>
 
                         </div>
@@ -531,7 +536,7 @@ if (isset($_POST['update'])) {
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="logout.php">Logout</a>
                 </div>
             </div>
         </div>
@@ -553,6 +558,7 @@ if (isset($_POST['update'])) {
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+
 
 </body>
 

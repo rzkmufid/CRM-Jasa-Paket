@@ -1,5 +1,6 @@
 <?php
 include 'db.php';
+include 'check_session.php';
 
 // Query data pengiriman
 $result = mysqli_query($conn, "SELECT
@@ -45,12 +46,18 @@ while ($row = mysqli_fetch_assoc($result)) {
                     <td>' . $row['REALISASI PENGIRIMAN'] . '</td>
                     <td>' . $row['KETERLAMBATAN'] . '</td>
                     <td>' . $row['Status'] . '</td>
-                    <td>
+                    <td class="hilang">
                         <a href="edit_pengiriman.php?id=' . $row['Id Pengiriman'] . '" class="btn btn-warning">Edit</a>
                         <a href="hapus_pengiriman.php?id=' . $row['Id Pengiriman'] . '" class="btn btn-danger mt-2">Hapus</a>
                     </td>
                 </tr>';
 }
+
+$user_id = $_SESSION['user_id'];
+$sql = "SELECT first_name, last_name FROM users WHERE id = '$user_id' LIMIT 1";
+$result1 = $conn->query($sql);
+
+$row1 = $result1->fetch_assoc();
 ?>
 
 <!DOCTYPE html>
@@ -79,6 +86,63 @@ while ($row = mysqli_fetch_assoc($result)) {
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 </head>
+<style>
+@media print {
+    .container {
+        margin: 0;
+    }
+
+    /* Mengatur lebar halaman cetak */
+    body {
+        width: 100%;
+        font-size: 12px;
+    }
+
+    /* Mengatur tabel agar memenuhi halaman cetak */
+    table {
+        width: 100%;
+    }
+
+    /* Menghilangkan elemen-elemen lainnya */
+    .sidebar {
+        display: none;
+    }
+
+    .topbar {
+        display: none;
+    }
+
+    .sticky-footer {
+        display: none;
+    }
+
+    .scroll-to-top {
+        display: none;
+    }
+
+    /* Memastikan tabel tercetak dalam satu halaman */
+    .card {
+        page-break-inside: avoid;
+        padding: 0;
+        margin: 0;
+    }
+
+    .hilang {
+        display: none;
+    }
+
+    .card-body {
+        padding: 0;
+        margin: 0;
+    }
+
+    .container-fluid {
+        margin: 0;
+        padding: 0;
+    }
+
+}
+</style>
 
 <body id="page-top">
 
@@ -206,7 +270,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span
+                                    class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $row1["first_name"] ?></span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
@@ -230,6 +295,9 @@ while ($row = mysqli_fetch_assoc($result)) {
                     <h1 class="h3 mb-2 text-gray-800">Status Pengiriman</h1>
                     <p class="mb-4">Ini adalah data pengiriman yang telah dikelompokkan berdasarkan status pengiriman.
                     </p>
+                    <div class=" mb-3">
+                        <button class="btn btn-primary hilang" onclick="printAllTables()">Cetak Semua Tabel</button>
+                    </div>
 
                     <!-- DataTales Example -->
                     <?php foreach ($tables as $status => $table) : ?>
@@ -253,7 +321,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                                             <th>Realisasi Pengiriman</th>
                                             <th>Keterlambatan</th>
                                             <th>Status</th>
-                                            <th>Action</th>
+                                            <th class="hilang">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -308,7 +376,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="logout.php">Logout</a>
                 </div>
             </div>
         </div>
@@ -330,6 +398,15 @@ while ($row = mysqli_fetch_assoc($result)) {
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+    </script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
+    <script>
+    function printAllTables() {
+        window.print(); // Mencetak halaman
+    }
+    </script>
 
 
 </body>
