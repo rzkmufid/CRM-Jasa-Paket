@@ -16,7 +16,11 @@ if (isset($_GET['id'])) {
         $conn->commit();
 
         // Redirect or show a success message
-        echo "Driver deleted successfully!";
+        // echo "Driver deleted successfully!";
+        echo "<script>
+                        alert('Driver deleted successfully!');
+                        document.location.href='driver.php';
+                    </script>";
     } catch (mysqli_sql_exception $exception) {
         // Rollback the transaction in case of error
         $conn->rollback();
@@ -37,4 +41,3 @@ if (isset($_GET['id'])) {
 } else {
     echo "No driver_id provided.";
 }
-?>
