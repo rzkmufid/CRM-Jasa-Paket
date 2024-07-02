@@ -1,406 +1,95 @@
-<?php
-include 'check_session.php';
-include 'db.php';
-
-$user_id = $_SESSION['user_id'];
-$sql = "SELECT first_name, last_name FROM users WHERE id = '$user_id' LIMIT 1";
-$result = $conn->query($sql);
-
-$row = $result->fetch_assoc();
-
-$sql1 = "SELECT COUNT(*) AS total_rows FROM pengiriman";
-$result1 = $conn->query($sql1);
-
-$sql2 = "SELECT COUNT(*) AS total_rows FROM pengiriman WHERE status_pengiriman = 'Telah Sampai'";
-$result2 = $conn->query($sql2);
-
-$sql3 = "SELECT COUNT(*) AS total_rows FROM driver";
-$result3 = $conn->query($sql3);
-
-$sql4 = "SELECT COUNT(*) AS total_rows FROM client";
-$result4 = $conn->query($sql4);
-
-
-
-
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beranda - Layanan Pengiriman</title>
+    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/sb-admin-2.min.css">
+    <style>
+        @font-face {
+            font-family: 'Outfit-Regular';
+            src: url('font/Outfit-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+        @font-face {
+            font-family: 'Outfit-Bold';
+            src: url('font/Outfit-Bold.ttf') format('truetype');
+            font-weight: bold;
+            font-style: bold;
+        }
 
-    <title>SB Admin 2 - Dashboard</title>
+        body {
+            font-family: 'Outfit-Regular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
 
-    <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+        .container {
+            max-width: 800px;
+            margin-top: 100px;
+            /* text-align: center; */
+        }
 
-    <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+        .card {
+            margin-top: 20px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
 
+        .card-title {
+            color: #007bff;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
 </head>
 
-<body id="page-top">
-
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <!-- <i class="fas fa-laugh-wink"></i> -->
-                </div>
-                <div class="sidebar-brand-text mx-1 ">PT. Cahaya Baru Transindo Utama</div>
-            </a>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="index.php">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Menu
-            </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClient" aria-expanded="true" aria-controls="collapseClient">
-                    <i class="fas fa-fw fa-laugh-wink"></i>
-                    <span>Client</span>
-                </a>
-                <div id="collapseClient" class="collapse" aria-labelledby="headingClient" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Content of Client</h6>
-                        <a class="collapse-item" href="client.php">Table Data Client</a>
-                        <a class="collapse-item" href="tambah_client.php">Tambah Data Client</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Driver Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDriver" aria-expanded="true" aria-controls="collapseDriver">
-                    <i class="fas fa-fw fa-truck"></i>
-                    <span>Driver</span>
-                </a>
-                <div id="collapseDriver" class="collapse" aria-labelledby="headingDriver" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Driver</h6>
-                        <a class="collapse-item" href="driver.php">Table Data Driver</a>
-                        <a class="collapse-item" href="tambah_driver.php">Tambah Data Driver</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Gudang Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGudang" aria-expanded="true" aria-controls="collapseGudang">
-                    <i class="fas fa-fw fa-warehouse"></i>
-                    <span>Gudang</span>
-                </a>
-                <div id="collapseGudang" class="collapse" aria-labelledby="headingGudang" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Gudang</h6>
-                        <a class="collapse-item" href="gudang.php">Table Data Gudang</a>
-                        <a class="collapse-item" href="tambah_gudang.php">Tambah Data Gudang</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Pengiriman Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePengiriman" aria-expanded="true" aria-controls="collapsePengiriman">
-                    <i class="fas fa-fw fa-box"></i>
-                    <span>Pengiriman</span>
-                </a>
-                <div id="collapsePengiriman" class="collapse" aria-labelledby="headingPengiriman" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Pengiriman</h6>
-                        <a class="collapse-item" href="pengiriman.php">Table Data Pengiriman</a>
-                        <a class="collapse-item" href="tambah_pengiriman.php">Tambah Data Pengiriman</a>
-                        <a class="collapse-item" href="status_pengiriman.php">Status Pengiriman</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Tables -->
-            <!-- <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
-            </li> -->
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-            <!-- Sidebar Message -->
-            <!-- <div class="sidebar-card d-none d-lg-flex">
-                <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
-                <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
-                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
-            </div> -->
-
-        </ul>
-        <!-- End of Sidebar -->
-
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-
-            <!-- Main Content -->
-            <div id="content">
-
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $row["first_name"] ?></span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
-
-                    </ul>
-                </nav>
-                <!-- End of Topbar -->
-
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                    </div>
-
-                    <!-- Content Row -->
-                    <div class="row">
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Kiriman Paket (Bulanan)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php
-                                                if ($result1->num_rows > 0) {
-                                                    // Mengambil hasil query
-                                                    $row = $result1->fetch_assoc();
-                                                    echo $row["total_rows"] . " ";
-                                                } else {
-                                                    echo "0 ";
-                                                }
-                                                ?>
-                                                Paket
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Jumlah Driver</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php
-                                                if ($result3->num_rows > 0) {
-                                                    // Mengambil hasil query
-                                                    $row = $result3->fetch_assoc();
-                                                    echo $row["total_rows"] . " ";
-                                                } else {
-                                                    echo "0 ";
-                                                }
-                                                ?>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-solid fa-user fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Jumlah Client
-                                            </div>
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                                                        <?php
-                                                        if ($result4->num_rows > 0) {
-                                                            // Mengambil hasil query
-                                                            $row = $result4->fetch_assoc();
-                                                            echo $row["total_rows"] . " ";
-                                                        } else {
-                                                            echo "0 ";
-                                                        }
-                                                        ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-regular fa-user fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Pending Requests Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Pengiriman Berhasil Bulan Ini</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php
-                                                if ($result2->num_rows > 0) {
-                                                    // Mengambil hasil query
-                                                    $row = $result2->fetch_assoc();
-                                                    echo $row["total_rows"];
-                                                } else {
-                                                    echo "0";
-                                                }
-                                                ?>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Content Row -->
-
-                <div class="row">
-
-                    <!-- Area Chart -->
-
-                    <!-- /.container-fluid -->
-
-                </div>
-            </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
-
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light container-md">
+        <a class="navbar-brand" href="index.php">PT. Cahaya Baru Transindo Utama</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index.php">Beranda <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?page=cek_ongkir">Cek Ongkir</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?page=cek_resi">Cek Resi</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="admin">Login</a>
+                </li>
+            </ul>
         </div>
-        <!-- End of Content Wrapper -->
+    </nav>
+
+    <div class="container">
+        <?php include 'content.php'; ?>
 
     </div>
-    <!-- End of Page Wrapper -->
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="logout.php">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

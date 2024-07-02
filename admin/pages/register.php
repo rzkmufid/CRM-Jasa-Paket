@@ -4,8 +4,7 @@ include 'db.php';
 
 // Mengecek apakah form registrasi telah di-submit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
+    $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     $repeat_password = $_POST['repeat_password'];
@@ -15,20 +14,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error_message = "Password tidak cocok!";
     } else {
         // Mencegah SQL Injection
-        $first_name = mysqli_real_escape_string($conn, $first_name);
-        $last_name = mysqli_real_escape_string($conn, $last_name);
+        $username = mysqli_real_escape_string($conn, $username);
         $email = mysqli_real_escape_string($conn, $email);
         $password = mysqli_real_escape_string($conn, $password);
 
-        // Simpan pengguna ke dalam database
-        $sql = "INSERT INTO users (first_name, last_name, email, password) VALUES ('$first_name', '$last_name', '$email', '$password')";
+        // Query untuk memeriksa apakah username atau email sudah digunakan
+        $check_user_query = "SELECT * FROM users WHERE username = '$username' OR email = '$email'";
+        $check_user_result = $conn->query($check_user_query);
 
-        if ($conn->query($sql) === TRUE) {
-            // Redirect ke halaman login
-            header("Location: login.php");
-            exit();
+        if ($check_user_result->num_rows > 0) {
+            $error_message = "Username atau Email sudah terdaftar!";
         } else {
-            $error_message = "Terjadi kesalahan saat menyimpan data!";
+            // Simpan pengguna ke dalam database
+            $sql = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$password')";
+
+            if ($conn->query($sql) === TRUE) {
+                // Redirect ke halaman login
+                header("Location: login.php");
+                exit();
+            } else {
+                $error_message = "Terjadi kesalahan saat menyimpan data!";
+            }
         }
     }
 }
@@ -46,16 +52,14 @@ $conn->close();
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Register</title>
+    <title>PT. Cahaya Baru Transindo Utama</title>
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
 
@@ -74,36 +78,23 @@ $conn->close();
                             </div>
 
                             <?php if (isset($error_message)) : ?>
-                            <div class="alert alert-danger" role="alert">
-                                <?= $error_message; ?>
-                            </div>
+                                <div class="alert alert-danger" role="alert">
+                                    <?= $error_message; ?>
+                                </div>
                             <?php endif; ?>
 
                             <form class="user" method="POST" action="">
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" name="first_name" class="form-control form-control-user"
-                                            id="exampleFirstName" placeholder="First Name" required>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <input type="text" name="last_name" class="form-control form-control-user"
-                                            id="exampleLastName" placeholder="Last Name" required>
-                                    </div>
+                                <div class="form-group">
+                                    <input type="text" name="username" class="form-control form-control-user" id="exampleInputUsername" placeholder="Username" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" name="email" class="form-control form-control-user"
-                                        id="exampleInputEmail" placeholder="Email Address" required>
+                                    <input type="email" name="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="Email Address" required>
                                 </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="password" name="password" class="form-control form-control-user"
-                                            id="exampleInputPassword" placeholder="Password" required>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <input type="password" name="repeat_password"
-                                            class="form-control form-control-user" id="exampleRepeatPassword"
-                                            placeholder="Repeat Password" required>
-                                    </div>
+                                <div class="form-group">
+                                    <input type="password" name="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="repeat_password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repeat Password" required>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-user btn-block">
                                     Register Account

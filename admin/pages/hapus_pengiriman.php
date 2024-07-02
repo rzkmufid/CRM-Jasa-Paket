@@ -5,7 +5,7 @@
 //     exit;
 // }
 
-include 'db.php';
+// include 'db.php';
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); // Mengaktifkan laporan kesalahan MySQLi
 
@@ -19,7 +19,8 @@ if (isset($_GET['id'])) {
         $stmt->execute();
         $stmt->close();
 
-        header("Location: pengiriman.php");
+        // header("Location: pengiriman.php");
+        echo "<script>window.location.href = 'index.php?page=pengiriman';</script>";
     } catch (mysqli_sql_exception $e) {
         // Tangani kesalahan foreign key constraint
         if ($e->getCode() == 1451) {
