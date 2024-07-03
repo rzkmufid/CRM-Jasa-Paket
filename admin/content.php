@@ -68,6 +68,9 @@ switch ($page) {
     case 'hapus_tarif':
         include 'pages/hapus_tarif.php';
         break;
+    case 'edit_tarif':
+        include 'pages/edit_tarif.php';
+        break;
     default:
         include 'pages/dashboard.php';
         break;
