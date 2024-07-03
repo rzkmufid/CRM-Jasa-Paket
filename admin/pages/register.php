@@ -55,11 +55,13 @@ $conn->close();
     <title>PT. Cahaya Baru Transindo Utama</title>
 
     <!-- Custom fonts for this template-->
-    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
 
@@ -78,23 +80,27 @@ $conn->close();
                             </div>
 
                             <?php if (isset($error_message)) : ?>
-                                <div class="alert alert-danger" role="alert">
-                                    <?= $error_message; ?>
-                                </div>
+                            <div class="alert alert-danger" role="alert">
+                                <?= $error_message; ?>
+                            </div>
                             <?php endif; ?>
 
                             <form class="user" method="POST" action="">
                                 <div class="form-group">
-                                    <input type="text" name="username" class="form-control form-control-user" id="exampleInputUsername" placeholder="Username" required>
+                                    <input type="text" name="username" class="form-control form-control-user"
+                                        id="exampleInputUsername" placeholder="Username" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" name="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="Email Address" required>
+                                    <input type="email" name="email" class="form-control form-control-user"
+                                        id="exampleInputEmail" placeholder="Email Address" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" name="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" required>
+                                    <input type="password" name="password" class="form-control form-control-user"
+                                        id="exampleInputPassword" placeholder="Password" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" name="repeat_password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repeat Password" required>
+                                    <input type="password" name="repeat_password" class="form-control form-control-user"
+                                        id="exampleRepeatPassword" placeholder="Repeat Password" required>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-user btn-block">
                                     Register Account
@@ -113,14 +119,14 @@ $conn->close();
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../vendor/jquery/jquery.min.js"></script>
+    <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="../../js/sb-admin-2.min.js"></script>
 
 </body>
 
