@@ -14,20 +14,20 @@ if (isset($_GET['id'])) {
 
     // Bungkus query dalam try-catch
     try {
-        $stmt = $conn->prepare("DELETE FROM pengiriman WHERE pengiriman_id = ?");
+        $stmt = $conn->prepare("DELETE FROM tarif WHERE id_tarif  = ?");
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $stmt->close();
         echo "<script>  
-                alert('Pengiriman Berhasil Dihapus!');
-                document.location.href='index.php?page=pengiriman';
+                alert('Tarif Berhasil Dihapus!');
+                document.location.href='index.php?page=tarif';
             </script>";
     } catch (mysqli_sql_exception $e) {
         // Tangani kesalahan foreign key constraint
         if ($e->getCode() == 1451) {
             echo "<script>
-                        alert('Error: Tidak dapat menghapus gudang karena terkait dengan data pengiriman. Harap hapus atau perbarui data terkait terlebih dahulu.');
-                        document.location.href='index.php?page=pengiriman';
+                        alert('Error: Tidak dapat menghapus Taruf karena terkait dengan data pengiriman. Harap hapus atau perbarui data terkait terlebih dahulu.');
+                        document.location.href='index.php?page=tarif';
                     </script>";
             // echo "";
         } else {

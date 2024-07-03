@@ -19,7 +19,7 @@ if (isset($_GET['id'])) {
         // echo "Driver deleted successfully!";
         echo "<script>
                         alert('Driver deleted successfully!');
-                        document.location.href='driver.php';
+                        document.location.href='index.php?page=driver';
                     </script>";
     } catch (mysqli_sql_exception $exception) {
         // Rollback the transaction in case of error
@@ -29,7 +29,7 @@ if (isset($_GET['id'])) {
         if ($exception->getCode() == 1451) {
             echo "<script>
                         alert('Error: Tidak dapat menghapus driver ini karena terkait dengan table yang ada.');
-                        document.location.href='driver.php';
+                        document.location.href='index.php?page=driver';
                     </script>";
         } else {
             // For other errors, display a generic error message

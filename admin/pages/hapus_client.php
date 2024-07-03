@@ -15,7 +15,10 @@ if (isset($_GET['id'])) {
 
         if ($delete_client) {
             // Redirect kembali ke halaman client setelah penghapusan selesai
-            echo "<script>window.location.href = 'index.php?page=client';</script>";
+            echo "<script>  
+                alert('Pengiriman Berhasil Dihapus!');
+                document.location.href='index.php?page=client';
+            </script>";
         } else {
             // Jika gagal menghapus client (seharusnya tidak terjadi jika tidak ada error database)
             echo "<script>alert('Gagal menghapus client.');</script>";

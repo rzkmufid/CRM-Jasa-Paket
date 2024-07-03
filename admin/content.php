@@ -65,6 +65,9 @@ switch ($page) {
     case 'tambah_tarif':
         include 'pages/tambah_tarif.php';
         break;
+    case 'hapus_tarif':
+        include 'pages/hapus_tarif.php';
+        break;
     default:
         include 'pages/dashboard.php';
         break;

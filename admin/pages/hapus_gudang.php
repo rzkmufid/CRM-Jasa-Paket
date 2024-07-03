@@ -19,13 +19,16 @@ if (isset($_GET['id'])) {
         $stmt->execute();
         $stmt->close();
 
-        header("Location: gudang.php");
+        echo "<script>  
+                alert('Gudang Berhasil Dihapus!');
+                document.location.href='index.php?page=gudang';
+            </script>";
     } catch (mysqli_sql_exception $e) {
         // Tangani kesalahan foreign key constraint
         if ($e->getCode() == 1451) {
             echo "<script>
                         alert('Error: Tidak dapat menghapus gudang karena terkait dengan data pengiriman. Harap hapus atau perbarui data terkait terlebih dahulu.');
-                        document.location.href='gudang.php';
+                        document.location.href='index.php?page=gudang';
                     </script>";
             // echo "";
         } else {
