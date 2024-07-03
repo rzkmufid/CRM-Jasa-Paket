@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 12, 2024 at 06:54 AM
+-- Generation Time: Jul 03, 2024 at 08:23 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -30,19 +30,17 @@ SET time_zone = "+00:00";
 CREATE TABLE `client` (
   `client_id` int(11) NOT NULL,
   `nama_client` varchar(100) NOT NULL,
-  `alamat_client` varchar(200) NOT NULL,
-  `telepon` varchar(15) NOT NULL,
-  `email` varchar(100) NOT NULL
+  `jenis_barang` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `client`
 --
 
-INSERT INTO `client` (`client_id`, `nama_client`, `alamat_client`, `telepon`, `email`) VALUES
-(1, 'Rizki Mufid', 'Padang Panjang', '089528496623', 'geroo@gmail.com'),
-(3, 'Angor', 'Pariaman', '0823827897283', 'angor@jj.com'),
-(4, 'Agum', 'Payakumbuh', '082372387812', 'agumjojo@may.co');
+INSERT INTO `client` (`client_id`, `nama_client`, `jenis_barang`) VALUES
+(8, 'PT. Cendana Sembilan', 'Semen'),
+(9, 'PT. Meroke Tetap Jaya', 'Pupuk'),
+(10, 'PT. Dohar Hara Indonesia', 'Batu Bara');
 
 -- --------------------------------------------------------
 
@@ -54,18 +52,28 @@ CREATE TABLE `driver` (
   `driver_id` int(11) NOT NULL,
   `nama_supir` varchar(100) NOT NULL,
   `alamat` varchar(200) NOT NULL,
-  `telepon` varchar(15) NOT NULL,
-  `email` varchar(100) NOT NULL
+  `plat` varchar(225) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `driver`
 --
 
-INSERT INTO `driver` (`driver_id`, `nama_supir`, `alamat`, `telepon`, `email`) VALUES
-(1, 'Supriandi', 'Padang Luar', '82378981723', 'pupri@gmail.com'),
-(2, 'Latief', 'Maninjau', '087066234521', 'latipgay@gmail.com'),
-(4, 'Rafi', 'Solok Selatan', '082372837123', 'rapidin@gmail.co.id');
+INSERT INTO `driver` (`driver_id`, `nama_supir`, `alamat`, `plat`) VALUES
+(9, 'Novriansyah Ega Saputra', 'Padang', 'BA 8219 QU'),
+(10, 'Bobby Efendi', 'Payakumbuh', 'BE 9766 GM'),
+(11, 'Doli', 'Padang', 'B 9296 UYT'),
+(12, 'Randi Putra', 'Solok', 'BH 8806 LK'),
+(13, 'Muhammad Faud', 'Solok', 'BA 8810 MJ'),
+(14, 'Bara Erlangga Putra', 'Solok', 'BA 9709 MZ'),
+(15, 'Romi Zelmiko', 'Padang', 'BA 9705 MZ'),
+(16, 'Evan Galista', 'Pariaman', 'BA 9711 MP'),
+(17, 'Jony Putra', 'Painan', 'BM 9308 RO'),
+(18, 'Jerry Gustian', 'Pesisir Selatan', 'BA 8584 LU'),
+(19, 'Jasril', 'Medan', 'BA 8742 GB'),
+(20, 'Arusman', 'Pesisir Selatan', 'BA 8685 MZ'),
+(21, 'Rinto', 'Bukittinggi', 'BD 8126 CK'),
+(22, 'Yurnadi', 'Jambi', 'BM 9965 ZU');
 
 -- --------------------------------------------------------
 
@@ -76,17 +84,17 @@ INSERT INTO `driver` (`driver_id`, `nama_supir`, `alamat`, `telepon`, `email`) V
 CREATE TABLE `gudang` (
   `warehouse_id` int(11) NOT NULL,
   `nama_gudang` varchar(100) NOT NULL,
-  `alamat_gudang` varchar(200) NOT NULL,
-  `kapasitas` int(11) NOT NULL,
-  `kapasitas_terpakai` int(11) NOT NULL
+  `alamat_gudang` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `gudang`
 --
 
-INSERT INTO `gudang` (`warehouse_id`, `nama_gudang`, `alamat_gudang`, `kapasitas`, `kapasitas_terpakai`) VALUES
-(1, 'PT HABI', 'Padang', 10000, 3);
+INSERT INTO `gudang` (`warehouse_id`, `nama_gudang`, `alamat_gudang`) VALUES
+(6, 'PT. Semen Padang', 'Padang'),
+(7, 'PT. HABI', 'Dumai'),
+(8, 'PT. Caritas Energi Indonesia', 'Jambi');
 
 -- --------------------------------------------------------
 
@@ -95,29 +103,54 @@ INSERT INTO `gudang` (`warehouse_id`, `nama_gudang`, `alamat_gudang`, `kapasitas
 --
 
 CREATE TABLE `pengiriman` (
-  `shipment_id` int(11) NOT NULL,
-  `client_id` int(11) NOT NULL,
-  `tanggal_muat` date NOT NULL,
-  `tanggal_bongkar` date NOT NULL,
-  `jenis_barang` varchar(50) NOT NULL,
-  `target_pengiriman` int(11) NOT NULL,
-  `asal_gudang_id` int(11) NOT NULL,
-  `tujuan_bongkar` varchar(100) NOT NULL,
-  `plat` varchar(20) NOT NULL,
-  `driver_id` int(11) NOT NULL,
-  `realisasi_pengiriman` int(11) NOT NULL,
+  `pengiriman_id` int(11) NOT NULL,
+  `tanggal` date DEFAULT NULL,
+  `client_id` int(11) DEFAULT NULL,
+  `muatan` float DEFAULT NULL,
+  `jenis_barang` varchar(255) DEFAULT NULL,
+  `target_pengiriman` int(11) DEFAULT NULL,
+  `warehouse_id` int(11) DEFAULT NULL,
+  `tujuan_bongkar` varchar(255) DEFAULT NULL,
+  `driver_id` int(11) DEFAULT NULL,
+  `realisasi_pengiriman` int(11) DEFAULT NULL,
+  `tanggal_bongkar` date DEFAULT NULL,
   `keterlambatan` int(11) DEFAULT NULL,
-  `status_pengiriman` enum('Belum Berangkat','Dalam Perjalanan','Telah Sampai') NOT NULL
+  `harga` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `pengiriman`
 --
 
-INSERT INTO `pengiriman` (`shipment_id`, `client_id`, `tanggal_muat`, `tanggal_bongkar`, `jenis_barang`, `target_pengiriman`, `asal_gudang_id`, `tujuan_bongkar`, `plat`, `driver_id`, `realisasi_pengiriman`, `keterlambatan`, `status_pengiriman`) VALUES
-(1, 1, '2024-06-08', '2024-06-11', 'ESTA KIESER-MAG', 4, 1, 'CIPTA FUTURA ESTATE', 'BA 8219 QU', 4, 4, 0, 'Belum Berangkat'),
-(2, 3, '2024-06-11', '2024-06-15', 'ESTA KIESER-MAG', 4, 1, 'CIPTA FUTURA ESTATE', 'BA 2302 NA', 4, 0, 0, 'Telah Sampai'),
-(3, 4, '2024-06-10', '2024-06-13', 'ESTA KIESER-MAG', 4, 1, 'CIPTA FUTURA ESTATE', 'BA 1234 ON', 4, 3, 0, 'Telah Sampai');
+INSERT INTO `pengiriman` (`pengiriman_id`, `tanggal`, `client_id`, `muatan`, `jenis_barang`, `target_pengiriman`, `warehouse_id`, `tujuan_bongkar`, `driver_id`, `realisasi_pengiriman`, `tanggal_bongkar`, `keterlambatan`, `harga`) VALUES
+(20, '2024-07-02', 9, 18.75, 'Pupuk', 4, 7, 'Muara Enim', 19, 4, '2024-07-06', 0, 9375000.00),
+(21, '2024-07-02', 9, 22.5, 'Pupuk', 4, 8, 'Padang', 21, NULL, NULL, NULL, 4950000.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tarif`
+--
+
+CREATE TABLE `tarif` (
+  `id_tarif` int(11) NOT NULL,
+  `asal` varchar(225) NOT NULL,
+  `tujuan` varchar(225) NOT NULL,
+  `tarif_perton` int(11) NOT NULL,
+  `estimasi` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tarif`
+--
+
+INSERT INTO `tarif` (`id_tarif`, `asal`, `tujuan`, `tarif_perton`, `estimasi`) VALUES
+(1, 'Padang', 'Jambi', 220000, 3),
+(2, 'Padang', 'Bengkulu', 250000, 3),
+(3, 'Dumai', 'Jambi', 320000, 3),
+(4, 'Dumai', 'Bengkulu', 450000, 4),
+(5, 'Padang', 'Sungai Penuh', 180000, 2),
+(6, 'Dumai', 'Muara Enim', 500000, 4);
 
 -- --------------------------------------------------------
 
@@ -127,11 +160,18 @@ INSERT INTO `pengiriman` (`shipment_id`, `client_id`, `tanggal_muat`, `tanggal_b
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `first_name` varchar(255) NOT NULL,
-  `last_name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
+  `username` varchar(225) NOT NULL,
+  `email` varchar(225) NOT NULL,
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `email`, `password`) VALUES
+(3, 'admin', 'admin@admin.com', 'admin'),
+(4, 'mufid', 'mufid@gmail', '123');
 
 --
 -- Indexes for dumped tables
@@ -159,17 +199,22 @@ ALTER TABLE `gudang`
 -- Indexes for table `pengiriman`
 --
 ALTER TABLE `pengiriman`
-  ADD PRIMARY KEY (`shipment_id`),
+  ADD PRIMARY KEY (`pengiriman_id`),
   ADD KEY `client_id` (`client_id`),
-  ADD KEY `asal_gudang_id` (`asal_gudang_id`),
+  ADD KEY `warehouse_id` (`warehouse_id`),
   ADD KEY `driver_id` (`driver_id`);
+
+--
+-- Indexes for table `tarif`
+--
+ALTER TABLE `tarif`
+  ADD PRIMARY KEY (`id_tarif`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -179,31 +224,37 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `client`
 --
 ALTER TABLE `client`
-  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `driver`
 --
 ALTER TABLE `driver`
-  MODIFY `driver_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `driver_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `gudang`
 --
 ALTER TABLE `gudang`
-  MODIFY `warehouse_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `warehouse_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `pengiriman`
 --
 ALTER TABLE `pengiriman`
-  MODIFY `shipment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `pengiriman_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `tarif`
+--
+ALTER TABLE `tarif`
+  MODIFY `id_tarif` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
@@ -214,7 +265,7 @@ ALTER TABLE `users`
 --
 ALTER TABLE `pengiriman`
   ADD CONSTRAINT `pengiriman_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `client` (`client_id`),
-  ADD CONSTRAINT `pengiriman_ibfk_2` FOREIGN KEY (`asal_gudang_id`) REFERENCES `gudang` (`warehouse_id`),
+  ADD CONSTRAINT `pengiriman_ibfk_2` FOREIGN KEY (`warehouse_id`) REFERENCES `gudang` (`warehouse_id`),
   ADD CONSTRAINT `pengiriman_ibfk_3` FOREIGN KEY (`driver_id`) REFERENCES `driver` (`driver_id`);
 COMMIT;
 
